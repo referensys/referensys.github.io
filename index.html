@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Referensys</title>
+<meta name="description" content="Turn any task into a step-by-step SOP. Every click becomes a step with a screenshot, a title and instructions, with personal details covered before anything is saved.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d6b6b'/%3E%3Crect x='8' y='6' width='14' height='19' rx='2' fill='%23fff'/%3E%3Crect x='11' y='10' width='8' height='2' rx='1' fill='%230d6b6b'/%3E%3Crect x='11' y='14' width='8' height='2' rx='1' fill='%230d6b6b' opacity='.6'/%3E%3Crect x='11' y='18' width='5' height='2' rx='1' fill='%230d6b6b' opacity='.6'/%3E%3Ccircle cx='23' cy='23' r='5' fill='none' stroke='%23f2711c' stroke-width='2.5'/%3E%3Ccircle cx='23' cy='23' r='1.5' fill='%23f2711c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one centred column — name and promise, download cards, how it works, privacy */
+:root{--bg:#eef2f3;--panel:#fff;--ink:#14212b;--muted:#5a6b78;--line:#d6dee2;--accent:#0d6b6b;--accent-ink:#fff;--soft:#e3f1f0;--mark:#f2711c;--warn-bg:#fff3e2;--warn:#a5560a;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0c1215;--panel:#141c20;--ink:#e3ebef;--muted:#90a2ad;--line:#26343b;--accent:#34b3a7;--accent-ink:#031d1b;--soft:#14302d;--warn-bg:#33250f;--warn:#f3a63b;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--sans);padding-block:max(32px,env(safe-area-inset-top,0px)) 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:clamp(28px,5vw,40px);line-height:1.1}
+header p{margin:4px 0 0;color:var(--muted);font-size:18px;max-width:52ch}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card.mine{border-color:var(--accent);box-shadow:0 0 0 3px var(--soft)}
+.card h2{margin:0;font-size:19px;display:flex;align-items:center;gap:10px}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.dl{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;padding:12px 18px;border-radius:10px;align-self:flex-start}
+.dl[aria-disabled=true]{background:var(--line);color:var(--muted);pointer-events:none}
+.small{font-size:13px;color:var(--muted)}
+.tag{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:var(--warn-bg);color:var(--warn);border-radius:99px;padding:2px 9px}
+.steps{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.steps h2{margin:0 0 10px;font-size:19px}
+.steps ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.qr{display:flex;gap:16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 20px;flex-wrap:wrap}
+[hidden]{display:none!important}
+#qr{background:#fff;padding:8px;border-radius:8px;line-height:0}
+footer{color:var(--muted);font-size:13.5px;display:flex;gap:16px;flex-wrap:wrap}
+details{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+summary{cursor:pointer;font-weight:600}
+details ol{margin:8px 0 0;padding-left:22px}
+@media (max-width:640px){.cards{grid-template-columns:1fr}.qr{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <svg width="64" height="64" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#0d6b6b"/><rect x="8" y="6" width="14" height="19" rx="2" fill="#fff"/><rect x="11" y="10" width="8" height="2" rx="1" fill="#0d6b6b"/><rect x="11" y="14" width="8" height="2" rx="1" fill="#0d6b6b" opacity=".6"/><rect x="11" y="18" width="5" height="2" rx="1" fill="#0d6b6b" opacity=".6"/><circle cx="23" cy="23" r="5" fill="none" stroke="#f2711c" stroke-width="2.5"/><circle cx="23" cy="23" r="1.5" fill="#f2711c"/></svg>
+    <div><h1>Referensys</h1><p>Turn any task into a step-by-step SOP. Every click becomes a step with a screenshot, a title and instructions.</p></div>
+  </header>
+
+  <div class="cards">
+    <div class="card" id="cWin">
+      <h2>Windows</h2>
+      <p>Records every click in any program on your PC. Windows 10 or 11.</p>
+      <a class="dl" id="dlWin" href="https://github.com/ethan-thesys/referensys/releases/latest">Download for Windows</a>
+      <span class="small" id="verWin">Updates itself after you install it.</span>
+    </div>
+    <div class="card" id="cAnd">
+      <h2>Android <span class="tag" id="andTag">Coming soon</span></h2>
+      <p>Records every tap in any app on your phone or tablet. Android 11 or newer.</p>
+      <a class="dl" id="dlAnd" aria-disabled="true">Download for Android</a>
+      <span class="small" id="verAnd">Installs from this page. No Play Store needed.</span>
+    </div>
+  </div>
+
+  <details id="howAnd">
+    <summary>Installing on Android</summary>
+    <ol>
+      <li>Open this page in <b>Chrome</b> on your phone or tablet and tap <b>Download for Android</b>.</li>
+      <li>Tap <b>Open</b> when the download finishes. If Android says Chrome isn't allowed to install apps, tap <b>Settings</b>, switch on <b>Allow from this source</b>, and go back.</li>
+      <li>Tap <b>Install</b>. If Play Protect warns about an unknown developer, tap <b>More details</b>, then <b>Install anyway</b>.</li>
+      <li>Open Referensys, sign in with Google, and turn on tap recording when it asks.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>Installing on Windows</summary>
+    <ol>
+      <li>Click <b>Download for Windows</b> and open the file.</li>
+      <li>If Windows shows "Windows protected your PC", click <b>More info</b>, then <b>Run anyway</b>.</li>
+      <li>Referensys opens when it's installed, and updates itself from then on.</li>
+    </ol>
+  </details>
+
+  <div class="qr" id="qrBox">
+    <div id="qr" aria-label="QR code for this page"></div>
+    <div><b>Installing on a phone or tablet?</b><br><span class="small">Point its camera at this code to open this page there.</span></div>
+  </div>
+
+  <section class="steps">
+    <h2>How it works</h2>
+    <ol>
+      <li>Click <b>Record</b> and do the task as you normally would. Each click or tap becomes a step.</li>
+      <li>Cover personal details with redaction boxes and check each step's wording.</li>
+      <li>Save to Google Drive. Each SOP is one PDF, and changes save automatically after that.</li>
+    </ol>
+  </section>
+
+  <footer><a href="privacy.html">Privacy policy</a><span>Saves only to your own Google Drive. Referensys has no servers of its own.</span></footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+/* Point each button at the newest release's file. If GitHub can't be reached, the buttons keep linking to the releases page. */
+(async()=>{
+  const isAndroid=/Android/i.test(navigator.userAgent);
+  document.getElementById(isAndroid?'cAnd':'cWin').classList.add('mine');
+  if(isAndroid)document.getElementById('howAnd').open=true;
+  try{new QRCode(document.getElementById('qr'),{text:'https://referensys.github.io/',width:112,height:112,correctLevel:QRCode.CorrectLevel.M})}catch(e){document.getElementById('qrBox').hidden=true}
+  try{
+    const r=await fetch('https://api.github.com/repos/ethan-thesys/referensys/releases/latest',{headers:{Accept:'application/vnd.github+json'}});
+    if(!r.ok)return;const rel=await r.json();const v=(rel.tag_name||'').replace(/^v/,'');
+    const exe=rel.assets.find(a=>/\.exe$/i.test(a.name)),apk=rel.assets.find(a=>/\.apk$/i.test(a.name));
+    if(exe){const a=document.getElementById('dlWin');a.href=exe.browser_download_url;document.getElementById('verWin').textContent='Version '+v+' · '+Math.round(exe.size/1048576)+' MB · updates itself after you install it.'}
+    if(apk){const a=document.getElementById('dlAnd');a.href=apk.browser_download_url;a.removeAttribute('aria-disabled');document.getElementById('andTag').remove();document.getElementById('verAnd').textContent='Version '+v+' · '+Math.round(apk.size/1048576)+' MB · installs from this page, no Play Store needed.'}
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
