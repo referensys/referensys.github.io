@@ -20,7 +20,7 @@ a{color:var(--accent)}
 header{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 header h1{margin:0;font-size:clamp(28px,5vw,40px);line-height:1.1}
 header p{margin:4px 0 0;color:var(--muted);font-size:18px;max-width:52ch}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .card.mine{border-color:var(--accent);box-shadow:0 0 0 3px var(--soft)}
 .card h2{margin:0;font-size:19px;display:flex;align-items:center;gap:10px}
@@ -62,6 +62,12 @@ details ol{margin:8px 0 0;padding-left:22px}
       <a class="dl" id="dlAnd" aria-disabled="true">Download for Android</a>
       <span class="small" id="verAnd">Installs from this page. No Play Store needed.</span>
     </div>
+    <div class="card" id="cExt">
+      <h2>Chrome extension</h2>
+      <p>Records clicks on any website, or your whole screen for desktop programs and remote desktop. Chrome on any computer.</p>
+      <a class="dl" id="dlExt" aria-disabled="true">Download for Chrome</a>
+      <span class="small" id="verExt">Added from a folder. See the steps below.</span>
+    </div>
   </div>
 
   <details id="howAnd">
@@ -71,6 +77,16 @@ details ol{margin:8px 0 0;padding-left:22px}
       <li>Tap <b>Open</b> when the download finishes. If Android says Chrome isn't allowed to install apps, tap <b>Settings</b>, switch on <b>Allow from this source</b>, and go back.</li>
       <li>Tap <b>Install</b>. If Play Protect warns about an unknown developer, tap <b>More details</b>, then <b>Install anyway</b>.</li>
       <li>Open Referensys, sign in with Google, and turn on tap recording when it asks.</li>
+    </ol>
+  </details>
+  <details>
+    <summary>Installing the Chrome extension</summary>
+    <ol>
+      <li>Click <b>Download for Chrome</b>. Extract the zip somewhere you'll keep it, like <b>Documents</b>. Chrome runs the extension from that folder, so don't delete it.</li>
+      <li>In Chrome, go to <b>chrome://extensions</b> and switch on <b>Developer mode</b> at the top right.</li>
+      <li>Click <b>Load unpacked</b> and choose the <b>Referensys</b> folder inside what you extracted (the one with <b>manifest.json</b> in it).</li>
+      <li>Referensys opens in a tab. Pin its icon using the puzzle piece in Chrome's toolbar, then sign in with Google.</li>
+      <li>When there's a new version, Referensys tells you and walks you through updating.</li>
     </ol>
   </details>
   <details>
@@ -109,9 +125,10 @@ details ol{margin:8px 0 0;padding-left:22px}
   try{
     const r=await fetch('https://api.github.com/repos/ethan-thesys/referensys/releases/latest',{headers:{Accept:'application/vnd.github+json'}});
     if(!r.ok)return;const rel=await r.json();const v=(rel.tag_name||'').replace(/^v/,'');
-    const exe=rel.assets.find(a=>/\.exe$/i.test(a.name)),apk=rel.assets.find(a=>/\.apk$/i.test(a.name));
+    const exe=rel.assets.find(a=>/\.exe$/i.test(a.name)),apk=rel.assets.find(a=>/\.apk$/i.test(a.name)),zip=rel.assets.find(a=>/extension.*\.zip$/i.test(a.name));
     if(exe){const a=document.getElementById('dlWin');a.href=exe.browser_download_url;document.getElementById('verWin').textContent='Version '+v+' · '+Math.round(exe.size/1048576)+' MB · updates itself after you install it.'}
     if(apk){const a=document.getElementById('dlAnd');a.href=apk.browser_download_url;a.removeAttribute('aria-disabled');document.getElementById('andTag').remove();document.getElementById('verAnd').textContent='Version '+v+' · '+Math.round(apk.size/1048576)+' MB · installs from this page, no Play Store needed.'}
+    if(zip){const a=document.getElementById('dlExt');a.href=zip.browser_download_url;a.removeAttribute('aria-disabled');document.getElementById('verExt').textContent='Version '+v+' · added from a folder. See the steps below.'}
   }catch(e){}
 })();
 </script>
